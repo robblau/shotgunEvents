@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Welcome to Shotgun Events Daemon’s documentation! &mdash; Shotgun Events Daemon v0.9 documentation</title>
+    <title>Welcome to Shotgun Event Daemon’s documentation! &mdash; Shotgun Events Daemon v0.9 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -22,7 +22,8 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Shotgun Events Daemon v0.9 documentation" href="#" /> 
+    <link rel="top" title="Shotgun Events Daemon v0.9 documentation" href="#" />
+    <link rel="next" title="Technical Overview" href="techOverview.html" /> 
   </head>
   <body>
     <div class="related">
@@ -31,6 +32,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="techOverview.html" title="Technical Overview"
+             accesskey="N">next</a> |</li>
         <li><a href="#">Shotgun Events Daemon v0.9 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -40,11 +44,85 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="welcome-to-shotgun-events-daemon-s-documentation">
-<h1>Welcome to Shotgun Events Daemon&#8217;s documentation!<a class="headerlink" href="#welcome-to-shotgun-events-daemon-s-documentation" title="Permalink to this headline">¶</a></h1>
-<p>Contents:</p>
+  <div class="section" id="welcome-to-shotgun-event-daemon-s-documentation">
+<h1>Welcome to Shotgun Event Daemon&#8217;s documentation!<a class="headerlink" href="#welcome-to-shotgun-event-daemon-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>This software is provided under the MIT License that can be found in the LICENSE
+file or here: <a class="reference external" href="http://www.opensource.org/licenses/mit-license.php">http://www.opensource.org/licenses/mit-license.php</a></p>
 <div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="techOverview.html">Technical Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="techOverview.html#plugin-processing-order">Plugin processing order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="techOverview.html#registering-a-plugin">Registering a plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="techOverview.html#a-callback">A callback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="techOverview.html#logging-information">Logging information</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Plugin API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#plugin-file">Plugin file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#registrar">Registrar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#callback">Callback</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>When you want to access the Shotgun event stream, the preferred way to do so it
+to poll the events table, get any new events, process them and repeat.</p>
+<p>A lot of stuff is required for this process to work successfully, stuff that may
+not have any direct bearing on the business rules that need to be applied.</p>
+<p>The role of the framework is to keep any tedious event polling related tasks out
+of the hands of the business logic implementor.</p>
+<p>The framework is a daemon process that runs on a server and polls the Shotgun
+event stream. When events are found, the daemon hands the events out to a series
+of registered plugins. Each plugin can process the event as it wishes.</p>
+<p>The daemon handles:</p>
 <ul class="simple">
+<li>Registering plugins from one or more specified paths.</li>
+<li>Deactivate any crashing plugins.</li>
+<li>Reloading plugins when they change on disk.</li>
+<li>Polling the Shotgun event stream.</li>
+<li>Remembering the last processed event id and any backlog.</li>
+<li>Starting from the last processed event id on daemon startup.</li>
+<li>Catching any connection errors.</li>
+<li>Logging information to stdout, file or email as required.</li>
+<li>Creating a connection to Shotgun that will be used by the callback.</li>
+<li>Handing off events to registered callbacks.</li>
+</ul>
+<p>A plugin handles:</p>
+<ul class="simple">
+<li>Registering any number of callbacks into the framework.</li>
+<li>Processing a single event when one is provided by the framework.</li>
+</ul>
+</div>
+<div class="section" id="advantages-of-the-framework">
+<h2>Advantages of the framework<a class="headerlink" href="#advantages-of-the-framework" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Only deal with a single polling mechanism, not with polling in many different
+scripts.</li>
+<li>Minimize network and database load (only one poller that supplies event to
+many event processing plugins).</li>
+</ul>
+</div>
+<div class="section" id="known-issues">
+<h2>Known Issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>When processing a large amount of items through a batch process. The resulting
+events may not be processed. There is code to address this but it is rather new
+and might not be completely bug free.</li>
+</ul>
+<p>If you would like to submit issues please go to the <a class="reference external" href="https://github.com/pboucher/shotgunEvents/issues">GitHub issues page</a>.</p>
+</div>
+<div class="section" id="going-forward">
+<h2>Going forward<a class="headerlink" href="#going-forward" title="Permalink to this headline">¶</a></h2>
+<p>Here is some stuff that could be changed or added going forward:</p>
+<ul class="simple">
+<li>Parallelize the processing of events. A tough one considering possible event
+dependencies.</li>
+<li>Pass all data to the callbacks using a context object for better future
+scalability.</li>
+<li>Allow for late creation of the Shotgun connections on access by the callback.</li>
+<li>Make config reading more robust.</li>
 </ul>
 </div>
 </div>
@@ -65,12 +143,19 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Welcome to Shotgun Events Daemon&#8217;s documentation!</a><ul>
+<li><a class="reference internal" href="#">Welcome to Shotgun Event Daemon&#8217;s documentation!</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#advantages-of-the-framework">Advantages of the framework</a></li>
+<li><a class="reference internal" href="#known-issues">Known Issues</a></li>
+<li><a class="reference internal" href="#going-forward">Going forward</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 
+  <h4>Next topic</h4>
+  <p class="topless"><a href="techOverview.html"
+                        title="next chapter">Technical Overview</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/index.txt"
@@ -99,6 +184,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="techOverview.html" title="Technical Overview"
+             >next</a> |</li>
         <li><a href="#">Shotgun Events Daemon v0.9 documentation</a> &raquo;</li> 
       </ul>
     </div>
