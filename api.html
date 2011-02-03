@@ -134,33 +134,33 @@ will be passed to the callback. Otherwise each key in the <em>matchEvents</em>
 filter is an event_type while each value is a list of possible
 attribute_name:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">matchEvents</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s">&#39;Shotgun_Task_Change&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;sg_status_list&#39;</span><span class="p">],</span>
+    <span class="s">&#39;Shotgun_Task_Change&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;sg_status_list&#39;</span><span class="p">],</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>You can have multiple event_type or attribute_names:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">matchEvents</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s">&#39;Shotgun_Task_Change&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;sg_status_list&#39;</span><span class="p">],</span>
-        <span class="s">&#39;Shotgun_Version_Change&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;description&#39;</span><span class="p">,</span> <span class="s">&#39;sg_status_list&#39;</span><span class="p">]</span>
+    <span class="s">&#39;Shotgun_Task_Change&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;sg_status_list&#39;</span><span class="p">],</span>
+    <span class="s">&#39;Shotgun_Version_Change&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;description&#39;</span><span class="p">,</span> <span class="s">&#39;sg_status_list&#39;</span><span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>You can filter on any event_type that has a given attribute_name:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">matchEvents</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s">&#39;*&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;sg_status_list&#39;</span><span class="p">],</span>
+    <span class="s">&#39;*&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;sg_status_list&#39;</span><span class="p">],</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>You can also filter on any attribute_name for a given event_type:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">matchEvents</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s">&#39;Shotgun_Version_Change&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;*&#39;</span><span class="p">]</span>
+    <span class="s">&#39;Shotgun_Version_Change&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;*&#39;</span><span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>Although the following is valid and functionally equivalent to
 specifying nothing, it&#8217;s just really useless:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">matchEvents</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s">&#39;*&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;*&#39;</span><span class="p">]</span>
+    <span class="s">&#39;*&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;*&#39;</span><span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
 </div>
