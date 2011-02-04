@@ -23,7 +23,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Shotgun Events Daemon v0.9 documentation" href="index.html" />
-    <link rel="prev" title="Technical Overview" href="techOverview.html" /> 
+    <link rel="next" title="Technical Overview" href="techOverview.html" />
+    <link rel="prev" title="Welcome to Shotgun Event Daemon’s documentation!" href="index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -34,6 +35,9 @@
              accesskey="I">index</a></li>
         <li class="right" >
           <a href="techOverview.html" title="Technical Overview"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Shotgun Event Daemon’s documentation!"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Shotgun Events Daemon v0.9 documentation</a> &raquo;</li> 
       </ul>
@@ -177,7 +181,7 @@ something bad happens in this plugin or any of its callbacks.</p>
 
 <dl class="method">
 <dt id="Registrar.registerCallback">
-<tt class="descname">registerCallback</tt><big>(</big><em>sgScriptName</em>, <em>sgScriptKey</em>, <em>callback</em>, <em>args=None</em>, <em>matchEvents=None</em><big>)</big><a class="headerlink" href="#Registrar.registerCallback" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">registerCallback</tt><big>(</big><em>sgScriptName</em>, <em>sgScriptKey</em>, <em>callback</em>, <em>matchEvents=None</em>, <em>args=None</em><big>)</big><a class="headerlink" href="#Registrar.registerCallback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Register a callback into the engine for this plugin.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -187,8 +191,8 @@ something bad happens in this plugin or any of its callbacks.</p>
 <li><strong>sgScriptName</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The name of the script taken from the Shotgun scripts page.</li>
 <li><strong>sgScriptKey</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The application key for the script taken from a Shotgun script page.</li>
 <li><strong>callback</strong> (<em>A function or an object with a __call__ method.</em>) &#8211; A callable function that. See <a class="reference internal" href="#exampleCallback" title="exampleCallback"><tt class="xref py py-func docutils literal"><span class="pre">exampleCallback()</span></tt></a>.</li>
-<li><strong>args</strong> &#8211; Any object you want the framework to pass back into your callback.</li>
 <li><strong>matchEvents</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; A filter of events you want to have passed to your callback.</li>
+<li><strong>args</strong> &#8211; Any object you want the framework to pass back into your callback.</li>
 </ul>
 </td>
 </tr>
@@ -203,20 +207,6 @@ be the appropriate key for the specified <em>sgScriptName</em>.</p>
 matches your filter needs processing. Although any callable should be
 able to run, using a class here is not suggested. Use of a function or
 an instance with a <em>__call__</em> method is more appropriate.</p>
-<p>The <em>args</em> argument will not be used by the event framework itself but
-will simply be passed back to your callback without any modification.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The point of the <em>args</em> argument is for you to be able to process
-time consuming stuff in the <a class="reference internal" href="#registerCallbacks" title="registerCallbacks"><tt class="xref py py-func docutils literal"><span class="pre">registerCallbacks()</span></tt></a> function and
-have it passed back to you at event processing time.</p>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Another use of the <em>args</em> argument could be to pass in a common
-mutable, say a <cite>dict</cite>, to multiple callbacks to have them share
-data.</p>
-</div>
 <p>The <em>matchEvent</em> argument is a filter that allows you to specify which
 events the callback being registered is interrested in. If <em>matchEvents</em>
 is not specified or None is specified, all events will be passed to the
@@ -252,6 +242,20 @@ specifying nothing, it&#8217;s just really useless:</p>
     <span class="s">&#39;*&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;*&#39;</span><span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
+</div>
+<p>The <em>args</em> argument will not be used by the event framework itself but
+will simply be passed back to your callback without any modification.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The point of the <em>args</em> argument is for you to be able to process
+time consuming stuff in the <a class="reference internal" href="#registerCallbacks" title="registerCallbacks"><tt class="xref py py-func docutils literal"><span class="pre">registerCallbacks()</span></tt></a> function and
+have it passed back to you at event processing time.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Another use of the <em>args</em> argument could be to pass in a common
+mutable, say a <cite>dict</cite>, to multiple callbacks to have them share
+data.</p>
 </div>
 </dd></dl>
 
@@ -316,8 +320,11 @@ as an exercise to the user.</p>
 </ul>
 
   <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to Shotgun Event Daemon&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
   <p class="topless"><a href="techOverview.html"
-                        title="previous chapter">Technical Overview</a></p>
+                        title="next chapter">Technical Overview</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/api.txt"
@@ -348,6 +355,9 @@ as an exercise to the user.</p>
              >index</a></li>
         <li class="right" >
           <a href="techOverview.html" title="Technical Overview"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Shotgun Event Daemon’s documentation!"
              >previous</a> |</li>
         <li><a href="index.html">Shotgun Events Daemon v0.9 documentation</a> &raquo;</li> 
       </ul>
