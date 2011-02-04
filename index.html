@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Shotgun Events Daemon v0.9 documentation" href="#" />
-    <link rel="next" title="Technical Overview" href="techOverview.html" /> 
+    <link rel="next" title="Plugins" href="api.html" /> 
   </head>
   <body>
     <div class="related">
@@ -33,7 +33,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="techOverview.html" title="Technical Overview"
+          <a href="api.html" title="Plugins"
              accesskey="N">next</a> |</li>
         <li><a href="#">Shotgun Events Daemon v0.9 documentation</a> &raquo;</li> 
       </ul>
@@ -52,17 +52,24 @@
 file or here: <a class="reference external" href="http://www.opensource.org/licenses/mit-license.php">http://www.opensource.org/licenses/mit-license.php</a></p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="techOverview.html">Technical Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="techOverview.html#plugin-processing-order">Plugin processing order</a></li>
-<li class="toctree-l2"><a class="reference internal" href="techOverview.html#registering-a-plugin">Registering a plugin</a></li>
-<li class="toctree-l2"><a class="reference internal" href="techOverview.html#a-callback">A callback</a></li>
-<li class="toctree-l2"><a class="reference internal" href="techOverview.html#logging-information">Logging information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#registercallbacks-function">registerCallbacks function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#callbacks">Callbacks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#printing-out-information">Printing out information</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">Plugin API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api.html#plugin-file">Plugin file</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#registrar">Registrar</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#callback">Callback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#api">API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#registercallbacks">registerCallbacks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#registrar">Registrar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#callback">Callback</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="techOverview.html">Technical Details</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="techOverview.html#plugin-processing-order">Plugin processing order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="techOverview.html#sharing-state">Sharing state</a></li>
 </ul>
 </li>
 </ul>
@@ -113,7 +120,7 @@ many event processing plugins).</li>
 events may not be processed. There is code to address this but it is rather new
 and might not be completely bug free.</li>
 </ul>
-<p>If you would like to submit issues please go to the <a class="reference external" href="https://github.com/pboucher/shotgunEvents/issues">GitHub issues page</a>.</p>
+<p>If you would like to submit issues please go to the <a class="reference external" href="http://github.com/shotgunsoftware/shotgunEvents/issues">GitHub issues page</a>.</p>
 </div>
 <div class="section" id="going-forward">
 <h2>Going forward<a class="headerlink" href="#going-forward" title="Permalink to this headline">¶</a></h2>
@@ -132,7 +139,6 @@ scalability.</li>
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
-<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
 <li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
 </ul>
 </div>
@@ -156,8 +162,8 @@ scalability.</li>
 </ul>
 
   <h4>Next topic</h4>
-  <p class="topless"><a href="techOverview.html"
-                        title="next chapter">Technical Overview</a></p>
+  <p class="topless"><a href="api.html"
+                        title="next chapter">Plugins</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/index.txt"
@@ -187,7 +193,7 @@ scalability.</li>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="techOverview.html" title="Technical Overview"
+          <a href="api.html" title="Plugins"
              >next</a> |</li>
         <li><a href="#">Shotgun Events Daemon v0.9 documentation</a> &raquo;</li> 
       </ul>

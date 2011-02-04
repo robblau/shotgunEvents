@@ -23,8 +23,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Shotgun Events Daemon v0.9 documentation" href="index.html" />
-    <link rel="next" title="Plugin API" href="api.html" />
-    <link rel="prev" title="Welcome to Shotgun Event Daemon’s documentation!" href="index.html" /> 
+    <link rel="prev" title="Plugins" href="api.html" /> 
   </head>
   <body>
     <div class="related">
@@ -34,10 +33,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="api.html" title="Plugin API"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="Welcome to Shotgun Event Daemon’s documentation!"
+          <a href="api.html" title="Plugins"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Shotgun Events Daemon v0.9 documentation</a> &raquo;</li> 
       </ul>
@@ -67,57 +63,20 @@ First resgistered, first run.</p>
 <p>It is suggested to keep any functionality that needs to share state somehow in
 the same plugin as one or multiple callbacks.</p>
 </div>
-<div class="section" id="registering-a-plugin">
-<h2>Registering a plugin<a class="headerlink" href="#registering-a-plugin" title="Permalink to this headline">¶</a></h2>
-<p>When the daemon loads, it looks in defined plugin locations and tries to import
-any .py file. If a .py file has a <em>registerCallbacks</em> function, it is called,
-passing in a Registrar object. The Registrar is what is used to do the callback
-registrations.</p>
-<p>Here is an example of a <em>registerCallbacks</em> function:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">registerCallbacks</span><span class="p">(</span><span class="n">reg</span><span class="p">):</span>
-    <span class="n">reg</span><span class="o">.</span><span class="n">registerCallback</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;apiKey&#39;</span><span class="p">,</span> <span class="n">doEvent</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>The registerCallback method of the Registrar object requires three arguments:</p>
+<div class="section" id="sharing-state">
+<h2>Sharing state<a class="headerlink" href="#sharing-state" title="Permalink to this headline">¶</a></h2>
+<p>If multiple callbacks need to share state many options may be used.</p>
 <ul class="simple">
-<li>A script name (as per Shotgun)</li>
-<li>A script API key (as per Shotgun)</li>
-<li>A callback to provide events to for processing</li>
+<li>Global variables. Ick. Please don&#8217;t do this.</li>
+<li>An imported module that holds the state information. Ick, but a bit better
+than simple globals.</li>
+<li>A mutable passed in the <em>args</em> argument when calling
+<a class="reference internal" href="api.html#Registrar.registerCallback" title="Registrar.registerCallback"><tt class="xref py py-meth docutils literal"><span class="pre">Registrar.registerCallback()</span></tt></a>. A state object of your design or something
+as simple as a dict. Preferred.</li>
+<li>Implement callbacks as __call__ on object instances and provide some shared
+state object at callback object initialization. Most powerful, most convoluted
+and might be a bit redundant vs. <em>args</em> argument method.</li>
 </ul>
-<p>Optionally, you can also provide an argument that will be passed on to the
-processing callback.</p>
-</div>
-<div class="section" id="a-callback">
-<h2>A callback<a class="headerlink" href="#a-callback" title="Permalink to this headline">¶</a></h2>
-<p>A callback requires four arguments:</p>
-<ul class="simple">
-<li>A shotgun instance with which to fetch any required information</li>
-<li>A logger object used to log messages.</li>
-<li>The event to process</li>
-<li>Any extra arguments provided at registration time</li>
-</ul>
-<p>Here is an example of a functional callback:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">doEvent</span><span class="p">(</span><span class="n">sg</span><span class="p">,</span> <span class="n">logger</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;In event </span><span class="si">%s</span><span class="s">...&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">event</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="logging-information">
-<h2>Logging information<a class="headerlink" href="#logging-information" title="Permalink to this headline">¶</a></h2>
-<p>All information can be passed out of the system (framework or plugins) by using
-the provided logger objects that come from the Python logging framework and are
-configured appropriately for you.</p>
-<p>To log from the registerCallbacks function do as follows:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">registerCallbacks</span><span class="p">(</span><span class="n">reg</span><span class="p">):</span>
-    <span class="n">reg</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;info&#39;</span><span class="p">)</span>
-    <span class="n">reg</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&#39;error&#39;</span><span class="p">)</span> <span class="c"># levels error and higher will be sent via email.</span>
-</pre></div>
-</div>
-<p>To log from a callback function:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">myRegisteredCallback</span><span class="p">(</span><span class="n">sg</span><span class="p">,</span> <span class="n">logger</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;In callback...&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
 </div>
 </div>
 
@@ -131,19 +90,14 @@ configured appropriately for you.</p>
   <ul>
 <li><a class="reference internal" href="#">Technical Overview</a><ul>
 <li><a class="reference internal" href="#plugin-processing-order">Plugin processing order</a></li>
-<li><a class="reference internal" href="#registering-a-plugin">Registering a plugin</a></li>
-<li><a class="reference internal" href="#a-callback">A callback</a></li>
-<li><a class="reference internal" href="#logging-information">Logging information</a></li>
+<li><a class="reference internal" href="#sharing-state">Sharing state</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Welcome to Shotgun Event Daemon&#8217;s documentation!</a></p>
-  <h4>Next topic</h4>
   <p class="topless"><a href="api.html"
-                        title="next chapter">Plugin API</a></p>
+                        title="previous chapter">Plugins</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/techOverview.txt"
@@ -173,10 +127,7 @@ configured appropriately for you.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="api.html" title="Plugin API"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="Welcome to Shotgun Event Daemon’s documentation!"
+          <a href="api.html" title="Plugins"
              >previous</a> |</li>
         <li><a href="index.html">Shotgun Events Daemon v0.9 documentation</a> &raquo;</li> 
       </ul>
