@@ -77,12 +77,12 @@ file or here: <a class="reference external" href="http://www.opensource.org/lice
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>When you want to access the Shotgun event stream, the preferred way to do so it
-to poll the events table, get any new events, process them and repeat.</p>
+to monitor the events table, get any new events, process them and repeat.</p>
 <p>A lot of stuff is required for this process to work successfully, stuff that may
 not have any direct bearing on the business rules that need to be applied.</p>
-<p>The role of the framework is to keep any tedious event polling related tasks out
-of the hands of the business logic implementor.</p>
-<p>The framework is a daemon process that runs on a server and polls the Shotgun
+<p>The role of the framework is to keep any tedious monitoring tasks out of the
+hands of the business logic implementor.</p>
+<p>The framework is a daemon process that runs on a server and monitors the Shotgun
 event stream. When events are found, the daemon hands the events out to a series
 of registered plugins. Each plugin can process the event as it wishes.</p>
 <p>The daemon handles:</p>
@@ -90,7 +90,7 @@ of registered plugins. Each plugin can process the event as it wishes.</p>
 <li>Registering plugins from one or more specified paths.</li>
 <li>Deactivate any crashing plugins.</li>
 <li>Reloading plugins when they change on disk.</li>
-<li>Polling the Shotgun event stream.</li>
+<li>Monitoring the Shotgun event stream.</li>
 <li>Remembering the last processed event id and any backlog.</li>
 <li>Starting from the last processed event id on daemon startup.</li>
 <li>Catching any connection errors.</li>
@@ -107,9 +107,9 @@ of registered plugins. Each plugin can process the event as it wishes.</p>
 <div class="section" id="advantages-of-the-framework">
 <h2>Advantages of the framework<a class="headerlink" href="#advantages-of-the-framework" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Only deal with a single polling mechanism, not with polling in many different
-scripts.</li>
-<li>Minimize network and database load (only one poller that supplies event to
+<li>Only deal with a single monitoring mechanism for all scripts, not one per
+script.</li>
+<li>Minimize network and database load (only one monitor that supplies event to
 many event processing plugins).</li>
 </ul>
 </div>
